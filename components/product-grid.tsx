@@ -69,7 +69,7 @@ export default function ProductGrid() {
               <div className="font-bold mb-3 flex items-center gap-2">
               ${product.price.toFixed(2)}
               {product.previousPrice > 0 &&
-                product.previousPrice !== product.price && (
+                product.previousPrice > product.price && (
                   <span className="text-sm text-gray-500 line-through">
                     ${product.previousPrice.toFixed(2)}
                   </span>

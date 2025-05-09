@@ -155,7 +155,7 @@ export default function ProductPage({ params }: { params: { id: string } }) {
             <div className="text-3xl font-bold flex items-center gap-2">
               ${product.price.toFixed(2)}
               {product.previousPrice > 0 &&
-                product.previousPrice !== product.price && (
+                product.previousPrice > product.price && (
                   <span className="text-xl text-gray-500 line-through">
                     ${product.previousPrice.toFixed(2)}
                   </span>
@@ -262,7 +262,7 @@ export default function ProductPage({ params }: { params: { id: string } }) {
                   <div className="text-sm text-gray-600 flex items-center gap-2">
                     ${item.price.toFixed(2)}
                     {item.previousPrice > 0 &&
-                      item.previousPrice !== item.price && (
+                      item.previousPrice > item.price && (
                         <span className="text-sm text-gray-400 line-through">
                           ${item.previousPrice.toFixed(2)}
                         </span>
