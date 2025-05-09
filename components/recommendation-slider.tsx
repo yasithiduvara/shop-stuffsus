@@ -26,7 +26,7 @@ export default function RecommendationSlider() {
           <div className="p-4">
             <div className="text-xs text-gray-500 mb-2">{product.category}</div>
             <Link href={`/product/${product.id}`} className="block">
-              <div className="bg-gray-100 rounded-lg overflow-hidden">
+              <div className="rounded-lg overflow-hidden">
                 <Image
                   src={product.images[0] || "/placeholder.svg"}
                   alt={product.name}

@@ -41,7 +41,7 @@ export default function ProductGrid() {
             <div className="p-4">
               <div className="text-xs text-gray-500 mb-2">{product.category}</div>
               <Link href={`/product/${product.id}`} className="block">
-                <div className="bg-gray-100 rounded-lg overflow-hidden">
+                <div className="rounded-lg overflow-hidden">
                   <Image
                     src={product.images[0] || "/placeholder.svg"}
                     alt={product.name}
@@ -65,7 +65,17 @@ export default function ProductGrid() {
                 ))}
                 <span className="text-xs text-gray-500 ml-1">({product.reviews} reviews)</span>
               </div>
-              <div className="font-bold mb-3">${product.price.toFixed(2)}</div>
+
+              <div className="font-bold mb-3 flex items-center gap-2">
+              ${product.price.toFixed(2)}
+              {product.previousPrice > 0 &&
+                product.previousPrice !== product.price && (
+                  <span className="text-sm text-gray-500 line-through">
+                    ${product.previousPrice.toFixed(2)}
+                  </span>
+                )}
+            </div>
+            
               <div className="flex gap-2">
                 <Button variant="outline" size="sm" className="flex-1">
                   Add to Cart

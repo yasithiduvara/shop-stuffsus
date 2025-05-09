@@ -14,14 +14,19 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { formatDistanceToNow } from "date-fns"
+import { useRouter } from "next/navigation";
 
 export default function NotificationDropdown() {
+  const router = useRouter();
+
   const { notifications, unreadCount, markAsRead, markAllAsRead, removeNotification, clearAllNotifications } =
     useNotifications()
   const [open, setOpen] = useState(false)
 
-  const handleNotificationClick = (id: string) => {
-    markAsRead(id)
+  const handleNotificationClick = (notificationId: string, productId: string) => {
+    markAsRead(notificationId);
+    // Navigate to the product page
+    router.push(`/product/${productId}`)
   }
 
   return (
@@ -55,7 +60,7 @@ export default function NotificationDropdown() {
                 <DropdownMenuItem
                   key={notification.id}
                   className={`p-3 cursor-default ${!notification.read ? "bg-gray-50" : ""}`}
-                  onClick={() => handleNotificationClick(notification.id)}
+                  onClick={() => handleNotificationClick(notification.id, notification.productId)}
                 >
                   <div className="flex flex-col w-full">
                     <div className="flex justify-between items-start">

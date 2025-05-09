@@ -74,18 +74,6 @@ export default function HomePage() {
         <div className="absolute inset-0 bg-black/20"></div>
         <div className="relative container mx-auto px-4 h-full flex flex-col justify-end pb-12">
           <h1 className="text-white text-8xl font-bold mb-8">Shop</h1>
-          <div className="flex items-center gap-4 max-w-md">
-            <div className="bg-white rounded-md flex items-center w-full overflow-hidden">
-              <input
-                type="text"
-                placeholder="Search on Stuffsus"
-                className="px-4 py-3 flex-1 outline-none"
-              />
-              <button className="bg-black text-white px-6 py-3 font-medium">
-                Search
-              </button>
-            </div>
-          </div>
         </div>
       </section>
 
@@ -148,7 +136,7 @@ export default function HomePage() {
         </section>
 
         {/* Newsletter */}
-        <NewsletterSignup />
+        {/* <NewsletterSignup /> */}
       </main>
 
       {/* Footer */}

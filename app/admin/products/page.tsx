@@ -24,6 +24,7 @@ export default function AdminProductsPage() {
     name: "",
     description: "",
     price: 0,
+    previousPrice: 0,
     category: "",
     rating: 0,
     reviews: 0,
@@ -51,6 +52,7 @@ export default function AdminProductsPage() {
       name: product.name,
       description: product.description,
       price: product.price,
+      previousPrice: product.previousPrice,
       category: product.category,
       rating: product.rating,
       reviews: product.reviews,
@@ -69,7 +71,7 @@ export default function AdminProductsPage() {
     const { name, value } = e.target
     setFormData({
       ...formData,
-      [name]: name === "price" || name === "rating" || name === "reviews" ? Number.parseFloat(value) : value,
+      [name]: name === "price" || name === "rating" || name === "reviews" || name === "previousPrice" ? Number.parseFloat(value) : value,
     })
   }
 
@@ -125,22 +127,33 @@ export default function AdminProductsPage() {
   }
 
   const handleSaveChanges = () => {
-    const originalProduct = products.find((product) => product.id === formData.id)
+    const originalProduct = products.find((p) => p.id === formData.id)
 
-    // Check if this is a price decrease
-    if (originalProduct && formData.price < originalProduct.price) {
-      const priceDifference = originalProduct.price - formData.price
+    // build the object that will finally be written back
+    let updatedProduct = { ...formData }
+
+    // ----- NEW: keep track of previous price -----
+    if (originalProduct && updatedProduct.price !== originalProduct.price) {
+      updatedProduct = { ...updatedProduct, previousPrice: originalProduct.price }
+    }
+    // ---------------------------------------------
+
+    // Notification when the price goes down
+    if (originalProduct && updatedProduct.price < originalProduct.price) {
+      const priceDifference = originalProduct.price - updatedProduct.price
       const percentDecrease = ((priceDifference / originalProduct.price) * 100).toFixed(1)
 
       addNotification({
         title: "Price Decreased!",
-        message: `${formData.name} price reduced from $${originalProduct.price.toFixed(2)} to $${formData.price.toFixed(2)} (${percentDecrease}% off)`,
+        message: `${updatedProduct.name} price reduced from $${originalProduct.price.toFixed(
+          2
+        )} to $${updatedProduct.price.toFixed(2)} (${percentDecrease}% off)`,
         type: "success",
+        productId: updatedProduct.id,
       })
     }
 
-    const updatedProducts = products.map((product) => (product.id === formData.id ? formData : product))
-
+    const updatedProducts = products.map((p) => (p.id === updatedProduct.id ? updatedProduct : p))
     setProducts(updatedProducts)
     localStorage.setItem("products", JSON.stringify(updatedProducts))
     setIsEditDialogOpen(false)
@@ -163,6 +176,7 @@ export default function AdminProductsPage() {
       name: "New Product",
       description: "Product description",
       price: 99.99,
+      previousPrice: 0,
       category: "Other",
       rating: 5,
       reviews: 0,

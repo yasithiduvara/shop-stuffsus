@@ -12,6 +12,7 @@ export type Notification = {
   timestamp: number
   read: boolean
   type: "info" | "success" | "warning" | "error"
+  productId: string
 }
 
 type NotificationContextType = {

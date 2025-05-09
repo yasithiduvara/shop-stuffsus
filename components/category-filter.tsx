@@ -24,7 +24,7 @@ export default function CategoryFilter() {
   return (
     <div className="space-y-6">
       <div>
-        <h3 className="font-medium mb-3">Category</h3>
+        <h3 className="font-medium mb-3 text-gray-900">Category</h3>
         <ul className="space-y-2">
           {categories.map((category) => (
             <li key={category.id}>
